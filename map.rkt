@@ -24,6 +24,15 @@
 (map (lambda (x) (+ x 1)) my-list)
 (map (lambda (x) (* x x)) my-list)
 
+(define (even? x)
+  (= 0 (modulo x 2)))
+(define (odd x)
+  (= 1 (modulo x 2)))
+(define (odd-prime x)
+  (not (even? x)))
+
+(filter even? my-list)
+(filter odd? my-list)
 
 (define (sum xs)
   ;; Locally define a helper function to encapsulate the accumulation logic

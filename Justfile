@@ -1,4 +1,4 @@
-scheme:
+racket:
     racket map.rkt
 
 rust:
