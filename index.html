@@ -34,13 +34,14 @@
 
 * Mathematical rigor
 * Minimizing side effects and global state
-  - Immutable variables are the default
-  - Pure functions are preferred
-  - Global variables or shared, latent state are avoided
-  - Side-effects are minimized, isolated, and explicit
 * Functions are first-class citizens
 * Composition over Inheritance
-* Dynamic typed languages exist, but there's a strong tradition for static, strictly typed ones too
+---
+## How do you minimize side effects?
+- Immutable variables are the default
+- Pure functions are preferred
+- Global variables or shared, latent state are avoided
+- Side-effects are minimized, isolated, and explicit
 ---
 ## Mathematical Rigor
 
@@ -300,7 +301,7 @@ Finally, we can imagine a function that reduces a collection to a single value.
 ---
 
 If we're playing at being data scientists, we might also want to square a list
-of numbers, and then sum them up.
+of numbers, and then sum them.
 ```lisp
 (define (sum-of-squares lst)
   ;; Locally define a helper function to encapsulate the accumulation logic
@@ -366,7 +367,7 @@ print(myReducedValue)
 Let's turn to rust, to demonstrate nulls vs optionals.
 ```rust
 fn fn_1() {
-    let maybe_value: Option<i32> = Some(42);
+    let maybe_value: Option&lt;i32&gt; = Some(42);
 
     match maybe_value {
         Some(value) => println!("The value is: {}", value),
@@ -378,7 +379,7 @@ fn fn_1() {
 ---
 Let's see it in use:
 ```rust
-fn match_get(res: Option<i32>) {
+fn match_get(res: Option&lt;i32&gt;) {
     match res {
         Some(value) => println!("The value is: {}", value),
         None => println!("No value found"),
@@ -427,7 +428,7 @@ enum FileReadError {
 ```rust
 
 fn fn_3() {
-    let result_value: Result<i32, FileReadError> = Ok(100);
+    let result_value: Result&lt;i32, FileReadError&gt; = Ok(100);
 
     match result_value {
         Ok(value) => println!("The value is: {}", value),
