@@ -52,23 +52,30 @@
 ## Mathematical Rigor
 
 * Many ideas and idioms grew out of abstract algebra or Category Theory
-  - "I have an operation on a type that is associative, commutative, and has an identity element"
+  - "I have an operation on a type that is binary...
+    - i.e., a + b
+  - associative...
+    - i.e., (a + (b + c)) == ((a + b) + c)
+  - with an identity value...
+    - i.e., a + 0 == a
   - Examples: Addition, Multiplication, String Concatenation, Appending vectors, merging hash maps or sets...
+---
+## Mathematical Rigor
   - "I want to traverse data structures in a way that only mutates the values, not the structure"
   - Examples: Map, Filter, Reduce/Fold, Zip, etc
 ---
 ## FP Style
 * Product types
   - Tuples, Records, Structs
-  - A Person has a Name, Age, and Address, and Customer ID
-  - An Order has a Customer ID, List of Product IDs, A unique Order ID, Final Total, and shipping state.
+  - A Person has a Name, Age, Address, and Customer ID
+  - An Order has a Customer ID, List of Product IDs, unique Order ID, Final Total, and shipping state.
 ---
 ## FP Style
 
 * Sum Types
   - Enums, Variants
   - A Process can be Stopped, Running, Blocked, or Stopped
-  - Your Pasta can be Spaghetti, Penne, or Macaroni
+  - Your Pasta can be Spaghetti, Penne, or Bowtie
   - The Sauce could be Marinara, Alfredo, Pesto, or Garlic Butter
 ---
 OMG Stop, just show me code already
@@ -110,7 +117,9 @@ class Dish(NamedTuple):
     pasta: Pasta
     sauce: Sauce
 
-my_favorite_dish = Dish(pasta=Pasta.Spaghetti, sauce=Sauce.GarlicAndOil)
+my_favorite_dish = Dish(
+  pasta=Pasta.Spaghetti,
+  sauce=Sauce.GarlicAndOil)
 
 print(my_favorite_dish)
 ```
@@ -208,10 +217,10 @@ So how do we factor out the part we keep reciting?
       (cons (fn (car xs)) (map fn (cdr xs)))))
 
 (define (add-one x) (+ 1 x))
-(define (square x) (* x x))
+(define (square-prime x) (* x x))
 (map add-one my-list)
 ;;; prints '(2 3 4 5 6)
-(map square my-list)
+(map square-prime my-list)
 ;;; prints '(1 4 9 16 25)
 ```
 ---
@@ -262,10 +271,19 @@ re-write each time
       (if (fn (car xs))
 	  (cons (car xs) (filter fn (cdr xs)))
 	  (filter fn (cdr xs)))))
+```
+---
+```lisp
+(define (even? x)
+  (= 0 (modulo x 2)))
+(define (odd x)
+  (= 1 (modulo x 2)))
+(define (odd-prime x)
+  (not (even? x)))
 
 
-(filter (lambda (x) (= 0 (% x 2))) my-list)
-(filter (lambda (x) (= 1 (% x 2))) my-list)
+(filter even? my-list)
+(filter odd? my-list)
 (filter (lambda (x) (> 10 x) my-list)
 ;;; a function that detects primes is
 ;;; left as an exercise to the reader :)
@@ -339,8 +357,8 @@ numbers in a list.
 
 ```lisp
 (reduce + 0
-  (map (lambda (x) (* x x))
-    (filter (lambda (x) (= 0 (% x 2))) my-list)))
+  (map square-prime
+    (filter even? my-list)))
 ;;; prints 20
 ```
 ---
@@ -475,7 +493,6 @@ Slide 27 from a talk from Tim Sweeney, CEO of Epic Games
 Slide deck: https://groups.csail.mit.edu/cag/crg/papers/sweeney06games.pdf
 ---
 ![Tim Sweeney's Comments](img/Tim.png)
-
 ---
 Null pinters, and array-out-of-bounds
 are solved by Maybe/Optional and
